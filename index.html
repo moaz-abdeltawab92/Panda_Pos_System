@@ -34,10 +34,18 @@
 
     body {
       font-family: 'Cairo', sans-serif;
-      background: var(--main-bg);
+      background: linear-gradient(-45deg, #2F4F64, #456882, #90A4B8, #fff);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       color: var(--text-dark);
       line-height: 1.7;
       overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     body.english {
@@ -462,6 +470,12 @@
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
+    }
+    .main-description,
+    .screenshots-title,
+    .features-title {
+      color: #fff !important;
+      text-shadow: 0 2px 8px rgba(47,79,100,0.18);
     }
   </style>
 </head>
