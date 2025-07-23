@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PandaPOS - نظام إدارة المطاعم</title>
+  <link rel="icon" type="image/jpj" href="panda_logo.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Backup Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: #f6f8fb;
+      color: #253858;
+      transition: all 0.3s ease;
+    }
+
+    body.english {
+      font-family: 'Inter', sans-serif;
+      direction: ltr;
+    }
+
+    header {
+      background: #253858;
+      color: white;
+      padding: 22px 0 18px 0;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 2px 12px rgba(37, 56, 88, 0.08);
+    }
+
+    .lang-toggle {
+      position: absolute;
+      top: 22px;
+      background: #4c8bf5;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: 15px;
+      box-shadow: 0 2px 8px rgba(76, 139, 245, 0.10);
+      letter-spacing: 0.5px;
+    }
+
+    body[dir="rtl"] .lang-toggle {
+      left: 22px;
+    }
+
+    body[dir="ltr"] .lang-toggle {
+      right: 22px;
+    }
+
+    .lang-toggle:hover {
+      background: #7fb3ff;
+      color: #253858;
+      transform: scale(1.06);
+    }
+
+    .container {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #253858;
+      font-weight: bold;
+    }
+
+    .main-description {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      color: #4e5d6c;
+    }
+
+    .features-title, .screenshots-title, .feature h3 {
+      color: #253858;
+      font-weight: bold;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .feature {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(76,139,245,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      border: 1px solid #e3e7ef;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(76,139,245,0.13);
+      border-color: #7fb3ff;
+    }
+
+    .feature i {
+      font-size: 32px;
+      color: #4c8bf5;
+      margin-bottom: 10px;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .cta a {
+      background: #4c8bf5;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(76,139,245,0.08);
+      border: none;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .cta a:hover {
+      background: #7fb3ff;
+      color: #253858;
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* App Screenshots Section */
+    .app-screenshots {
+      margin: 60px 0;
+      text-align: center;
+    }
+
+    .screenshots-title {
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
+    .screenshots-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .screenshots-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    .screenshot-item {
+      background: #fff;
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 4px 16px rgba(76,139,245,0.06);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #e3e7ef;
+    }
+
+    .screenshot-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 16px 32px rgba(76,139,245,0.13);
+      border-color: #7fb3ff;
+    }
+
+    .screenshot-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #4c8bf5;
+    }
+
+    .screenshot-item h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .screenshot-item p {
+      color: #4e5d6c;
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .actual-screenshot {
+      width: 100%;
+      height: 350px;
+      max-width: 100%;
+      object-fit: contain;
+      background: #f6f8fb;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #e3e7ef;
+    }
+
+    .screenshot-item:hover .actual-screenshot {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .actual-screenshot {
+        height: 200px;
+      }
+    }
+    footer {
+      background: #253858;
+      color: #fff;
+      text-align: center;
+      padding: 22px 10px 18px 10px;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 -2px 8px rgba(37, 56, 88, 0.08);
+    }
+    footer img {
+      width: 30px;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e3e7ef;
+      background: #fff;
+      padding: 2px;
+    }
+    .main-title {
+      color: #253858;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    header .main-title {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body dir="rtl">
+  <header>
+    <!-- Arabic Content -->
+    <div id="arabic-content">
+      <h1 class="main-title">PandaPOS - نظام إدارة المطاعم</h1>
+    </div>
+    <!-- English Content -->
+    <div id="english-content" class="hidden">
+      <h1 class="main-title">PandaPOS - Restaurant Management System</h1>
+    </div>
+    <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">EN</button>
+  </header>
+
+  <div class="container">
+    <!-- Arabic Content -->
+    <div id="arabic-main" class="arabic-content">
+      <p class="main-description">نظام شامل لإدارة المطاعم والكافيهات من خلال تطبيقين، واحد للكاشير وآخر للإدارة، لتسهيل كل عملياتك.</p>
+      <div class="value-prop-box" style="background: #fff; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); padding: 24px 20px; margin-bottom: 32px; color: #2e3b4e; font-size: 17px; line-height: 1.8;">
+        <strong>ليه تختار PandaPOS؟</strong><br>
+        إدارة المطاعم والكافيهات دايمًا مليانة تحديات: متابعة الطلبات، حساب الأرباح، مراقبة المخزون، وتقليل الأخطاء البشرية. مع PandaPOS، هتقدر تدير كل تفاصيل شغلك بسهولة وسرعة من خلال حلول متكاملة مصممة خصيصًا لتناسب احتياجاتك اليومية وتحقق أفضل النتائج.<br><br>
+        النظام بيحللك مشاكل زي:<br>
+        <ul style="margin: 10px 0 0 0; padding-right: 20px;">
+          <li>نسيان أو ضياع الطلبات.</li>
+          <li>صعوبة تتبع المصروفات والأرباح.</li>
+          <li>مشاكل في إدارة المخزون وتحديثه تلقائيًا.</li>
+          <li>صعوبة استخراج تقارير دقيقة في أي وقت.</li>
+        </ul>
+        <br>مع PandaPOS، هتقدر تركز على تطوير شغلك ومتابعة مطعمك من أي مكان وفي أي وقت، وكل البيانات عندك لحظيًا، بدل ما تضيع وقتك في الحسابات والمتابعة اليدوية.
+      </div>
+
+      <!-- App Screenshots Section -->
+      <div class="app-screenshots">
+        <h2 class="screenshots-title">شاهد التطبيقين في العمل</h2>
+        <div class="screenshots-container">
+          <div class="screenshot-item">
+            <h3><i class="fas fa-cash-register"></i> تطبيق الكاشير</h3>
+            <p>واجهة سهلة وسريعة لإدارة الطلبات والمبيعات اليومية</p>
+            <div class="screenshot-placeholder">
+              <img src="casheir.png" alt="Management App" class="actual-screenshot"> 
+            </div>
+          </div>
+          <div class="screenshot-item">
+            <h3><i class="fas fa-chart-pie"></i> تطبيق الإدارة</h3>
+            <p>لوحة تحكم شاملة للتقارير والإحصائيات والإدارة المتقدمة</p>
+            <div class="screenshot-placeholder">
+              <img src="poss.png" alt="Management App" class="actual-screenshot"> 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section Title (Arabic) -->
+      <h2 class="features-title" style="text-align: right; margin-bottom: 20px; color: #2e3b4e; font-size: 24px; font-weight: bold;">أهم المميزات اللي بنقدمها:</h2>
+      <div class="features">
+        <div class="feature">
+          <i class="fas fa-cash-register"></i>
+          <h3>إدارة الطلبات</h3>
+          <p>متابعة الطلبات اليومية، الأسبوعية، الشهرية أو حسب تاريخ معين.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-money-bill-trend-up"></i>
+          <h3>إدارة المصروفات</h3>
+          <p>سجل وصنّف مصاريفك واعرف صافي الربح بدقة.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-utensils"></i>
+          <h3>إدارة المنيو</h3>
+          <p>تحكم كامل في أصناف المنيو (إضافة - تعديل - حذف).</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-warehouse"></i>
+          <h3>إدارة المخزون</h3>
+          <p>ربط المخزون بالأصناف والخصم تلقائي من كل طلب.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-chart-line"></i>
+          <h3>تتبع الأرباح</h3>
+          <p>احسب صافي الربح بسهولة من خلال الإيرادات والمصروفات.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-file-excel"></i>
+          <h3>تصدير البيانات</h3>
+          <p>احصل على تقارير الطلبات والعملاء في Excel.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-trash-alt"></i>
+          <h3>متابعة الطلبات المحذوفة</h3>
+          <p>سجل كامل للطلبات التي تم حذفها لتتبع أي خطأ أو تلاعب.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-star"></i>
+          <h3>الأصناف الأكثر مبيعًا</h3>
+          <p>عرض وتحليل لأفضل الأصناف حسب المبيعات.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-language"></i>
+          <h3>دعم متعدد اللغات</h3>
+          <p>الواجهة متاحة بالعربية والإنجليزية بسهولة.</p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <a href="https://wa.me/201017645365" target="_blank" rel="noopener">اطلب تجربة مجانية الآن</a>
+      </div>
+    </div>
+
+    <!-- English Content -->
+    <div id="english-main" class="english-content hidden">
+      <p class="main-description">A comprehensive restaurant and café management system with two applications - one for cashier and another for management - to streamline all your operations.</p>
+      <div class="value-prop-box" style="background: #fff; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); padding: 24px 20px; margin-bottom: 32px; color: #2e3b4e; font-size: 17px; line-height: 1.8;">
+        <strong>Why Choose PandaPOS?</strong><br>
+        Running a restaurant or café comes with daily challenges: tracking orders, calculating profits, managing inventory, and reducing human errors. With PandaPOS, you can manage all your operations from one place—easily and efficiently.<br><br>
+        PandaPOS solves problems like:<br>
+        <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+          <li>Lost or forgotten orders.</li>
+          <li>Difficulty tracking expenses and profits.</li>
+          <li>Inventory management headaches and manual updates.</li>
+          <li>Struggling to generate accurate reports anytime.</li>
+        </ul>
+        <br>With PandaPOS, you can focus on growing your business instead of getting stuck in manual paperwork and follow-ups.
+      </div>
+
+      <!-- App Screenshots Section -->
+      <div class="app-screenshots">
+        <h2 class="screenshots-title">See Both Apps in Action</h2>
+        <div class="screenshots-container">
+          <div class="screenshot-item">
+            <h3><i class="fas fa-cash-register"></i> Cashier App</h3>
+            <p>Easy and fast interface for managing orders and daily sales</p>
+            <div class="screenshot-placeholder">
+              <img src="casheir.png" alt="Cashier App" class="actual-screenshot"> 
+            </div>
+          </div>
+          <div class="screenshot-item">
+            <h3><i class="fas fa-chart-pie"></i> Management App</h3>
+            <p>Comprehensive dashboard for reports, analytics and advanced management</p>
+            <div class="screenshot-placeholder">
+              <img src="poss.png" alt="Management App" class="actual-screenshot"> 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section Title (English) -->
+      <h2 class="features-title" style="text-align: left; margin-bottom: 20px; color: #2e3b4e; font-size: 24px; font-weight: bold;">Key Features We Offer:</h2>
+      <div class="features">
+        <div class="feature">
+          <i class="fas fa-cash-register"></i>
+          <h3>Order Management</h3>
+          <p>Track daily, weekly, monthly orders or by specific date range.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-money-bill-trend-up"></i>
+          <h3>Expense Management</h3>
+          <p>Record and categorize your expenses to know net profit accurately.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-utensils"></i>
+          <h3>Menu Management</h3>
+          <p>Full control over menu items (add - edit - delete).</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-warehouse"></i>
+          <h3>Inventory Management</h3>
+          <p>Link inventory to items with automatic deduction from each order.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-chart-line"></i>
+          <h3>Profit Tracking</h3>
+          <p>Calculate net profit easily through revenue and expense tracking.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-file-excel"></i>
+          <h3>Data Export</h3>
+          <p>Get order and customer reports in Excel format.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-trash-alt"></i>
+          <h3>Deleted Orders Tracking</h3>
+          <p>Complete log of deleted orders to track any errors or manipulation.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-star"></i>
+          <h3>Best Selling Items</h3>
+          <p>Display and analyze top items by sales performance.</p>
+        </div>
+
+        <div class="feature">
+          <i class="fas fa-language"></i>
+          <h3>Multi-language Support</h3>
+          <p>Interface available in Arabic and English with ease.</p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <a href="https://wa.me/201017645365" target="_blank" rel="noopener">Request Free Trial Now</a>
+      </div>
+    </div>
+  </div>
+  <footer style="background: #253858; color: #fff; text-align: center; padding: 22px 10px 18px 10px; font-size: 16px; letter-spacing: 0.5px; margin-top: 60px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <img src="panda_logo.jpg" alt="PandaPOS Logo" style="width: 30px; height: auto;">
+    
+    <span id="footer-arabic">جميع الحقوق محفوظة لنظام PandaPOS © 2025</span>
+    <span id="footer-english" class="hidden">All rights reserved to PandaPOS © 2025</span>
+  </footer>
+  
+  <script>
+    let isArabic = true;
+
+    function toggleLang() {
+      const body = document.body;
+      const langBtn = document.getElementById('lang-btn');
+      const htmlTag = document.documentElement;
+      
+      if (isArabic) {
+        // Switch to English
+        body.setAttribute('dir', 'ltr');
+        body.classList.add('english');
+        htmlTag.setAttribute('lang', 'en');
+        htmlTag.setAttribute('dir', 'ltr');
+        
+        // Hide Arabic content
+        document.getElementById('arabic-content').classList.add('hidden');
+        document.getElementById('arabic-main').classList.add('hidden');
+        
+        // Show English content
+        document.getElementById('english-content').classList.remove('hidden');
+        document.getElementById('english-main').classList.remove('hidden');
+        
+        // Update button text
+        langBtn.textContent = 'عربي';
+        
+        // Update page title
+        document.title = 'PandaPOS - Restaurant Management System';
+        
+        isArabic = false;
+      } else {
+        // Switch to Arabic
+        body.setAttribute('dir', 'rtl');
+        body.classList.remove('english');
+        htmlTag.setAttribute('lang', 'ar');
+        htmlTag.setAttribute('dir', 'rtl');
+        
+        // Hide English content
+        document.getElementById('english-content').classList.add('hidden');
+        document.getElementById('english-main').classList.add('hidden');
+        
+        // Show Arabic content
+        document.getElementById('arabic-content').classList.remove('hidden');
+        document.getElementById('arabic-main').classList.remove('hidden');
+        
+        // Update button text
+        langBtn.textContent = 'EN';
+        
+        // Update page title
+        document.title = 'PandaPOS - نظام إدارة المطاعم';
+        
+        isArabic = true;
+      }
+    }
+
+    // Footer language toggle
+    function updateFooterLang() {
+      if (document.body.classList.contains('english')) {
+        document.getElementById('footer-arabic').classList.add('hidden');
+        document.getElementById('footer-english').classList.remove('hidden');
+      } else {
+        document.getElementById('footer-arabic').classList.remove('hidden');
+        document.getElementById('footer-english').classList.add('hidden');
+      }
+    }
+    // Call on load and on language toggle
+    updateFooterLang();
+    const oldToggleLang = window.toggleLang;
+    window.toggleLang = function() {
+      oldToggleLang();
+      updateFooterLang();
+    };
+  </script>
+</body>
+
+</html>
